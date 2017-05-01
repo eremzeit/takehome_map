@@ -8,7 +8,7 @@
 		on the bounds you passed in your query.
 - Client
   - Chose not to use any front-end framework.  I assumed you were interested more in seeing a performant map.
-  - I decided not to use any cool [https://github.com/mourner/geokdbush](spatial indexes) and instead use implement a geo hash from scratch that projects coords from the lat lng space into a discrete grid of buckets.  In retrospect, using one of the libraries would have been much faster and it would have been easier to handle reconciling across different data scales.
+  - I decided not to use any cool [spatial indexes](https://github.com/mourner/geokdbush) and instead use implement a geo hash from scratch that projects coords from the lat lng space into a discrete grid of buckets.  In retrospect, using one of the libraries would have been much faster and it would have been easier to handle reconciling across different data scales.
   - Uses job lists to manage the asynchronicity of updating the map when new data comes in.
 
 
