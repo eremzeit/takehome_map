@@ -113,7 +113,6 @@ function _readColorValues() {
       return [thresh, rgb]
     })
 
-    console.log(res)
     return res
   })
 }
@@ -126,6 +125,8 @@ function makePointGeoJSON(lat, lng) {
     }
   }
 }
+
+
 
 module.exports = {
   readAllSamplesAllFiles: readAllSamplesAllFiles

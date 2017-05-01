@@ -13,8 +13,8 @@ let ready = new Promise(function(resolve, reject) {
 })
 
 function resetDb() {
-  return dbService.ready.then((db) => {
-    return db.dropDatabase().then(() => {
+  return ready.then((db) => {
+    return db.dropCollection('agg_samples').then(() => {
       let coll = db.collection('agg_samples') // just put them all in the same collection
       return db.collection('agg_samples').createIndex({loc: '2dsphere', scale: 1}, {})
     })

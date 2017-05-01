@@ -4,24 +4,25 @@ const app = express();
 
 const Model = require('./model')
 const Constants = require('./constants')
+const Util = require('./utils')
 
 function configureServer() {
   app.use(express.static('../public'))
 
   app.get('/weather', function(req, res) {
-    let params = _.chain(req.query)
-      .pick('east', 'west', 'north', 'south')
-      .mapObject((val, key) => {
-        return parseFloat(val);
-      }).value()
+    let layerId = parseInt(req.query.layer_id)
+    let scale = parseInt(req.query.scale)
 
-    params.layer_id = parseInt(req.query.layer_id)
+    //normalize the coords to make sure they fit the range we'd expect
+    let boundingArea = req.query.queryPath.map((x) => {
+      return Util.normalizeCoords(x[0], x[1])
+    })
 
-    Model.queryPoints(params.north, params.south, params.east, params.west, params.layer_id).then((points) => {
-      points = points || []
-      console.log('points.length:', points.length)
-      console.log('kb:', JSON.stringify(points).length / 1000)
-      res.json(points)
+    Model.queryPointsAndMakeShapes(boundingArea, layerId, scale).then((shapes) => {
+      shapes = shapes || []
+      console.log('points.length:', shapes.length)
+      console.log('kb:', JSON.stringify(shapes).length / 1000)
+      res.json(shapes)
     }).catch((err) => {
       console.log(err)
     })
