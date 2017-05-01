@@ -1,6 +1,6 @@
-## Climacell take home
+# Takehome_map
 
-# Design
+## Design
 
 - Server
 	- Data preloaded and aggregated into multiple levels of resolution so that later queries are fast
@@ -12,7 +12,7 @@
   - Uses job lists to manage the asynchronicity of updating the map when new data comes in.
 
 
-# Continued Work
+## Continued Work
 
 - TESTS :) I always write tests for production-intended code, but here I tended to skimp for the sake of time.
 - To reduce the number of polygons for better performance, I could aggregate adjacent cells that have the same color value into one large polygon region.  On the other hand, it would make the bookkeeping more complex.
@@ -20,15 +20,15 @@
 - More intelligent data pooling and caching.
   - Right now, moving around causes a refetch of all of the data in the window.  For example, we might fetch smaller portions of the window.
   - I could reduce the typical size of each query by not refetching data from areas that we already have data from.
-- Various other performance optimizations.
+- There are a couple of places where my bookkeeping is ambiguous and I have to do a full clear of all the shapes. This causes a flicker.  Instead, I need to remove only at the same time as adding new cells, favoring reuse of old cells.
 
-## Running Code
+# Running Code
 
-# Server
+## Server
 
 `cd ./server; npm install; node main.js`
 
-# Client
+## Client
 You should be able to run the code that I already compiled and checked in in the `./public` directory.  Navigate your browser to `http://localhost:4108/`.  Navigate your browser to `http://localhost:4108/`.
 
 If you want to build, I think you can just run'
